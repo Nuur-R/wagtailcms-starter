@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% load static wagtailcore_tags wagtailimages_tags %}
+
+{% block content %}
+    <h1> {{page.title}} </h1>
+    <h3> {{page.subtitle}} </h3>
+
+    {% image page.image fill-150x150-c100 format-jpeg %}
+    {% image page.image width-400 %}
+    {% image page.image width-400 format-avif-lossless %}
+    {% image page.image width-400 format-webp-lossless%}
+    <br>
+    {% image page.image fill-90x200 as custom_img %}
+    {{ custom_img.url }}
+    {{ custom_img.width }}
+    {{ custom_img.height }}
+
+    {{ page.image }}
+    {% if page.body %}
+        {{ page.body|richtext }}
+    {% endif %}
+
+    {% if page.custom_document %}
+        This is Download URL:
+        {{ page.custom_document.title }} <br>
+        <a href="{{ page.custom_document.url }}" download>Download</a> <br>
+        {{ page.custom_document.description }}
+    {% endif %}
+{% endblock %}
