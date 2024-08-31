@@ -1,5 +1,7 @@
 from django.db import models
 from django.core.exceptions import ValidationError
+
+from wagtail import blocks
 from wagtail.models import Page
 from wagtail.fields import RichTextField, StreamField
 from wagtail.admin.panels import FieldPanel
@@ -47,6 +49,17 @@ class BlogDetail(Page):
         [
             ('text', TextBlock()),
             ('image', ImageChooserBlock()),
+            ('corousel', blocks.StreamBlock(
+                [
+                    ('image', ImageChooserBlock()),
+                    ('quotation', blocks.StreamBlock(
+                        [
+                            ('text', TextBlock()),
+                            ('author', TextBlock()),
+                        ]
+                    )),
+                ]
+            ))
         ],
         block_counts={
             'text': {'min_num':1},

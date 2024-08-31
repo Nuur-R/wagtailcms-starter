@@ -10,6 +10,20 @@
             <br>
         {% elif block.block_type == 'image' %}
             {% image block.value fill-400x200 %}
+            <br>
+        {% elif block.block_type == 'corousel' %}
+            {% for slide in block.value %}
+                {% if slide.block_type == 'image' %}
+                    {% image slide.value fill-400x200 %}
+                {% elif slide.block_type == 'quotation' %}
+                    <p>
+                        {{ slide.value.text }}
+                        <strong>
+                            &mdash; {{ slide.value.author }}
+                        </strong>
+                    </p>
+                {% endif %}
+            {% endfor %}
         {% endif %}
     {% endfor %}
     <hr>
