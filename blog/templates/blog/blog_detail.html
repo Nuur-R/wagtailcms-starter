@@ -8,11 +8,7 @@
     <hr>
     <hr>
     <hr>
-    {% for post in blog_post %}
-        <a href="{{ post.url }}">
-            {{ post.title }}
-        </a>
-        <p>{{ post.subtitle }}</p>
-        <hr>
+    {% for tag in page.tags.all %}
+        {{ tag.name }} <a href="/blog/?tag={{ tag.slug }}">{{ tag.slug }}</a>
     {% endfor %}
 {% endblock content %}
