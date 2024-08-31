@@ -1,10 +1,14 @@
 from django.db import models
 from django.core.exceptions import ValidationError
 from wagtail.models import Page
-from wagtail.fields import RichTextField
+from wagtail.fields import RichTextField, StreamField
 from wagtail.admin.panels import FieldPanel
+from wagtail.blocks import TextBlock
+from wagtail.images.blocks import ImageChooserBlock
+
 from modelcluster.fields import ParentalKey
 from modelcluster.contrib.taggit import ClusterTaggableManager
+
 from taggit.models import TaggedItemBase
 
 class BlogIndex(Page):
@@ -39,7 +43,19 @@ class BlogDetail(Page):
 
     tags = ClusterTaggableManager(through=BlogPageTags, blank=True)
     subtitle = models.CharField(max_length=255, blank=True)
-    body = RichTextField(blank=True)
+    body = StreamField(
+        [
+            ('text', TextBlock()),
+            ('image', ImageChooserBlock()),
+        ],
+        block_counts={
+            'text': {'min_num':1},
+            'image': {'max_num':2},
+        },
+        use_json_field=True,
+        blank=True,
+        null=True,
+    )
 
     content_panels = Page.content_panels + [
         FieldPanel('subtitle'),
