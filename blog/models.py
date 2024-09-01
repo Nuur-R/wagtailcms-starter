@@ -5,13 +5,22 @@ from wagtail import blocks
 from wagtail.models import Page
 from wagtail.fields import RichTextField, StreamField
 from wagtail.admin.panels import FieldPanel
-from wagtail.blocks import TextBlock
+from wagtail.blocks import TextBlock, PageChooserBlock
 from wagtail.images.blocks import ImageChooserBlock
+from wagtail.documents.blocks import DocumentChooserBlock
+from wagtail.snippets.blocks import SnippetChooserBlock
 
 from modelcluster.fields import ParentalKey
 from modelcluster.contrib.taggit import ClusterTaggableManager
 
 from taggit.models import TaggedItemBase
+
+class Author(models.Model):
+    name = models.CharField(max_length=255)
+    bio = models.TextField()
+
+    def __str__(self):
+        return self.name
 
 class BlogIndex(Page):
     max_count = 1
@@ -49,6 +58,22 @@ class BlogDetail(Page):
         [
             ('text', TextBlock()),
             ('image', ImageChooserBlock()),
+            ('doc', DocumentChooserBlock()),
+            ('page', PageChooserBlock()),
+            ('call_to_action_1', blocks.StructBlock(
+                [
+                    ('text', blocks.RichTextBlock(
+                        features=['bold', 'italic'],
+                        required=True,
+                    )),
+                    ('page', PageChooserBlock()),
+                    ('button_text', blocks.CharBlock(
+                        max_length=100,
+                        required=False
+                    )),
+                ],
+                label='CTA #1'
+            )),
             ('corousel', blocks.StreamBlock(
                 [
                     ('image', ImageChooserBlock()),

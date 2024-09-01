@@ -11,6 +11,23 @@
         {% elif block.block_type == 'image' %}
             {% image block.value fill-400x200 %}
             <br>
+        {% elif block.block_type == 'doc' %}
+            {{ block.value.url }}
+            <br>
+        {% elif block.block_type == 'page' %}
+            <a href="{{ block.value.url }}">{{ block.value.title }}</a>
+            <br>
+        {% elif block.block_type == 'call_to_action_1' %}
+            <div>
+                <div class="rich-text">{{ block.value.text }}</div>
+                <a href="{{ block.value.page.url }}" class="button">
+                    {% if block.value.button_text %}
+                        {{ block.value.button_text }}
+                    {% else %}
+                        {{ block.value.page.title }}
+                    {% endif %}
+                </a>
+            </div>
         {% elif block.block_type == 'corousel' %}
             {% for slide in block.value %}
                 {% if slide.block_type == 'image' %}
