@@ -15,6 +15,8 @@ from modelcluster.contrib.taggit import ClusterTaggableManager
 
 from taggit.models import TaggedItemBase
 
+from components import blocks as custom_blocks
+
 class Author(models.Model):
     name = models.CharField(max_length=255)
     bio = models.TextField()
@@ -56,49 +58,16 @@ class BlogDetail(Page):
     subtitle = models.CharField(max_length=255, blank=True)
     body = StreamField(
         [
-            ('text', TextBlock()),
-            ('image', ImageChooserBlock()),
+            ('text', custom_blocks.TextBlock()),
+            ('image', custom_blocks.ImageBlock()),
             ('doc', DocumentChooserBlock()),
             ('page', PageChooserBlock()),
-            ('call_to_action_1', blocks.StructBlock(
-                [
-                    ('text', blocks.RichTextBlock(
-                        features=['bold', 'italic'],
-                        required=True,
-                    )),
-                    ('page', PageChooserBlock()),
-                    ('button_text', blocks.CharBlock(
-                        max_length=100,
-                        required=False
-                    )),
-                ],
-                label='CTA #1'
-            )),
-            ('corousel', blocks.StreamBlock(
-                [
-                    ('image', ImageChooserBlock()),
-                    ('quotation', blocks.StreamBlock(
-                        [
-                            ('text', TextBlock()),
-                            ('author', TextBlock()),
-                        ]
-                    )),
-                ]
-            )),
+            ('call_to_action_1', custom_blocks.CallToAction1Block()),
+            ('corousel', custom_blocks.CarouselBlock()),
             ('info', blocks.StaticBlock(
                 admin_text="ini namanya static blocks"
             )),
-            ('faq', blocks.ListBlock(
-                blocks.StructBlock([
-                    ('question', blocks.CharBlock()),
-                    ('answer', blocks.RichTextBlock(
-                        features=['bold', 'italic'],
-                    ))
-                ]),
-                min_num=1,
-                max_num=5,
-                label="pertanyaan yg sering ditanyakan"
-            ))
+            ('faq', custom_blocks.FAQListBlock()),
         ],
         block_counts={
             'text': {'min_num':1},
