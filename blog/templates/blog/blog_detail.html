@@ -41,6 +41,15 @@
                     </p>
                 {% endif %}
             {% endfor %}
+        {% elif block.block_type == 'info' %}
+            <div style='background-color: black; color: antiquewhite; font-size: large; padding: 30px; text-align: center;'>
+                ini dari block static
+            </div>
+        {% elif block.block_type == 'faq' %}
+            {% for faq in block.value %}
+                <h2>{{ faq.question }}</h2>
+                <p>{{ faq.answer|richtext }}</p>
+            {% endfor %}
         {% endif %}
     {% endfor %}
     <hr>

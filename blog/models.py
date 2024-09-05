@@ -84,6 +84,20 @@ class BlogDetail(Page):
                         ]
                     )),
                 ]
+            )),
+            ('info', blocks.StaticBlock(
+                admin_text="ini namanya static blocks"
+            )),
+            ('faq', blocks.ListBlock(
+                blocks.StructBlock([
+                    ('question', blocks.CharBlock()),
+                    ('answer', blocks.RichTextBlock(
+                        features=['bold', 'italic'],
+                    ))
+                ]),
+                min_num=1,
+                max_num=5,
+                label="pertanyaan yg sering ditanyakan"
             ))
         ],
         block_counts={
