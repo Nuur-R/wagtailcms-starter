@@ -11,14 +11,15 @@ class TextBlock(blocks.TextBlock):
             required=False,
         )
     class Meta:
-        # template = "components/text_block.html"
-        ...
-
+        template = "components/text_block.html"
+        group="ikan"
+        
 class InfoBlock(blocks.StaticBlock):
     class Meta:
-        # template = "components/info_block.html"
         admin_text = "ini namanya info block"
         label = "Info"
+        template = "components/info_block.html"
+        group="ikan"
 
 class FAQBlock(blocks.StructBlock):
     question = blocks.CharBlock()
@@ -29,10 +30,10 @@ class FAQListBlock(blocks.ListBlock):
     def __init__(self, **kwargs):
         super().__init__(FAQBlock(), **kwargs,)
     class Meta:
-        # template = "components/faq_list_block.html"
         min_num = 1
         max_num = 5
         label = "FAQ"
+        template = "components/faq_list_block.html"
 
 class CarouselBlock(blocks.StreamBlock):
     image = ImageChooserBlock()
@@ -41,8 +42,8 @@ class CarouselBlock(blocks.StreamBlock):
         ('author', blocks.CharBlock()),
     ])
     class Meta:
-        # template = "components/carousel_block.html"
         label = "Carousel"
+        template = "components/carousel_block.html"
 
 class CallToAction1Block(blocks.StructBlock):
     text = blocks.RichTextBlock(
@@ -55,10 +56,9 @@ class CallToAction1Block(blocks.StructBlock):
         required=False
     )
     class Meta:
-        # template = "components/call_to_action_1_block.html"
         label = "CTA #1"
-        
+        template = "components/call_to_action_1_block.html"
+
 class ImageBlock(ImageChooserBlock):
     class Meta:
-        # template = "components/image_block.html"
-        ...
+        template = "components/image_block.html"
